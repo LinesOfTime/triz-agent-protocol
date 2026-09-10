@@ -26,6 +26,10 @@ The protocol produces a compact, inspectable model before proposing changes. Ana
 
 Repeated model output never upgrades an assumption to evidence.
 
+Before interpreting a changed artifact, establish its lifecycle role. A release hash can validate the immutable release object it names; it is not automatically the expected hash of a mutable working copy. Byte-level drift establishes difference, not corruption. When intent is material and unknown, ask the user before recommending restoration or replacement.
+
+Coverage metrics must name their denominator and how it was established. A dependency set reconstructed by the evaluated method is useful for an observed self-check, but it is not an independent gold set and cannot establish absolute recall.
+
 ## IFR form
 
 ```text

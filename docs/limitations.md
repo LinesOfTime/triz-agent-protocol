@@ -5,6 +5,8 @@
 - Cause graphs remain hypotheses until their links are supported.
 - Pattern catalogues can cause premature anchoring.
 - A highly scored concept can still be unsafe, unlawful, or infeasible.
+- A context pass cannot prove that it found every dependency when it also constructed the comparison set.
+- Hash and package-part differences do not by themselves identify semantic changes, corruption, or user intent.
 
 The project does not provide engineering certification, medical or legal advice, patentability opinions, safety approval, or authorization to modify live systems.
 

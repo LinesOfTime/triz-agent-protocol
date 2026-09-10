@@ -1,25 +1,25 @@
-# TRIZ Agent Protocol
+# TRIZ Agent Protocol — протокол ТРИЗ для ИИ-агентов
 
-A model-agnostic, evidence-aware protocol for applying TRIZ-inspired analysis to difficult engineering, software, research, and process problems.
+Независимый от конкретной модели протокол доказательного применения подходов ТРИЗ к сложным инженерным, программным, исследовательским и процессным задачам.
 
 ```text
 facts → functions → causes → contradictions → resources
       → solution concepts → evaluation → verification plan
 ```
 
-The project is usable by humans, Codex, Claude Code, local LLMs, and applications through plain Markdown and JSON. Its validator uses only the Python standard library.
+Проект рассчитан на совместную работу людей, Codex, Claude Code, локальных языковых моделей и приложений. Обмен данными выполняется через обычные Markdown- и JSON-файлы. Валидатор использует только стандартную библиотеку Python.
 
-## Why
+## Зачем нужен проект
 
-Many AI workflows reduce TRIZ to a prompt listing inventive principles. This project instead requires inspectable artifacts: evidence labels, functional and cause-conflict models, contradictions, available resources, distinct mechanisms, risks, and falsifiable checks.
+Во многих сценариях работа с ТРИЗ сводится к запросу со списком изобретательских принципов. Этот проект требует проверяемого результата: разделения фактов и предположений, функциональной и причинно-конфликтной моделей, формулировки противоречий, учёта доступных ресурсов, сравнения разных механизмов решения, описания рисков и опровергающих проверок.
 
-## Status
+## Состояние
 
-`0.1.0` — usable foundation. Software mappings and Guided ARIZ are original adaptations requiring broader expert review. This is not an official TRIZ implementation or certification.
+`0.1.1` — рабочая основа протокола. Программные соответствия и режим Guided ARIZ являются авторскими адаптациями и требуют более широкой экспертной проверки. Проект не является официальным стандартом ТРИЗ или системой сертификации.
 
-## Quick start
+## Быстрый запуск
 
-Requires Python 3.10+ and no third-party packages.
+Требуется Python 3.10 или новее. Сторонние пакеты не нужны.
 
 ```bash
 python -m triz_protocol init analysis.json --mode lite
@@ -28,33 +28,33 @@ python -m triz_protocol render analysis.json --output analysis.md
 python -m unittest discover -s tests -v
 ```
 
-## Modes
+## Режимы
 
-| Mode | Use when | Required analysis |
+| Режим | Когда применять | Обязательный анализ |
 |---|---|---|
-| `lite` | Bounded, non-trivial problem | Facts, goal, IFR, contradiction, resources, verification |
-| `analysis` | Recurring or architectural problem | Lite + functions, causes, alternatives, evaluation |
-| `ariz-guided` | Persistent conflict without an obvious solution | Analysis + operational zone/time, extreme configurations, physical contradiction |
+| `lite` | Ограниченная, но нетривиальная задача | Факты, цель, ИКР, противоречие, ресурсы, проверка |
+| `analysis` | Повторяющаяся или архитектурная проблема | Lite + функции, причины, альтернативы, оценка |
+| `ariz-guided` | Устойчивый конфликт без очевидного решения | Analysis + оперативная зона и время, предельные конфигурации, физическое противоречие |
 
-## Contents
+## Состав репозитория
 
-- `docs/`: methodology, terminology, limitations, integration;
-- `protocol/`: human-readable procedures;
-- `schemas/`: machine-readable contract;
-- `knowledge/`: original extensible pattern catalogues;
-- `skills/`: portable agent skill;
-- `triz_protocol/`: offline CLI and validator;
-- `examples/`, `tests/`, `benchmarks/`: evidence of behavior.
+- `docs/` — методология, терминология, ограничения и интеграция;
+- `protocol/` — процедуры для чтения человеком;
+- `schemas/` — машиночитаемый контракт;
+- `knowledge/` — расширяемые авторские каталоги шаблонов;
+- `skills/` — переносимый навык для ИИ-агента;
+- `triz_protocol/` — автономный CLI и валидатор;
+- `examples/`, `tests/`, `benchmarks/` — примеры, тесты и проверочные наборы.
 
-## Boundaries
+## Ограничения
 
-- LLM output is a proposal, not evidence.
-- The protocol requests concise reviewable artifacts, not hidden chain of thought.
-- It does not include copied contradiction matrices, standard-solution texts, training materials, or third-party case studies.
-- High-impact decisions require domain review and independent verification.
+- Ответ языковой модели является предложением, а не доказательством.
+- Протокол требует кратких проверяемых артефактов, а не раскрытия скрытой цепочки рассуждений.
+- Репозиторий не содержит скопированных матриц противоречий, текстов стандартных решений, учебных материалов или сторонних разборов.
+- Значимые решения требуют профильной экспертизы и независимой проверки.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) and [docs/limitations.md](docs/limitations.md).
+См. [CONTRIBUTING.md](CONTRIBUTING.md) и [docs/limitations.md](docs/limitations.md).
 
-## License
+## Лицензия
 
-Code and original project text are MIT licensed. “TRIZ” and “ARIZ” identify an established methodology associated with Genrikh Altshuller and the TRIZ community. External materials are not included.
+Код и оригинальные тексты проекта распространяются по лицензии MIT. Названия TRIZ/ТРИЗ и ARIZ/АРИЗ обозначают сложившуюся методологию, связанную с Генрихом Альтшуллером и сообществом ТРИЗ. Внешние материалы в репозиторий не включены.

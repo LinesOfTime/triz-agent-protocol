@@ -1,0 +1,9 @@
+{
+  "id": "recall-denominator-001",
+  "scenario": "The evaluated context pass discovers 21 dependencies and then reports finding all 21, without an external frozen dependency set or independent review.",
+  "expected": {
+    "allowed_claim": "100% observed recall against the reconstructed known set",
+    "independent_recall_established": false,
+    "absolute_completeness_established": false
+  }
+}

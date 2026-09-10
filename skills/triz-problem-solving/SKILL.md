@@ -13,6 +13,8 @@ Produce concise, reviewable problem models and solution concepts. Do not claim h
 - **Analysis:** recurring, architectural, or causally unclear problem. Also read `references/advanced-analysis.md`.
 - **Guided ARIZ:** persistent strong contradiction after ordinary analysis. Read both references.
 
+For repository context selection, artifact drift, or coverage claims, also read `references/context-evidence.md`.
+
 ## Shared requirements
 
 1. Establish system boundary, facts, goal, and invariants.
