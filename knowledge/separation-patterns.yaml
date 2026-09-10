@@ -1,0 +1,7 @@
+version: "0.1"
+patterns:
+  - {id: time, question: "Can opposing requirements apply at different times?"}
+  - {id: space, question: "Can they apply in different locations or subsystems?"}
+  - {id: condition, question: "Can behavior change according to an observable condition?"}
+  - {id: system-level, question: "Can requirements belong to different system levels?"}
+  - {id: interaction, question: "Can the harmful interaction be transformed or mediated?"}

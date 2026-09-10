@@ -1,0 +1,12 @@
+version: "0.1"
+resource_types:
+  - existing-components
+  - data-and-metadata
+  - interfaces-and-protocols
+  - logs-and-failures
+  - tests-and-reference-results
+  - time-and-scheduling
+  - compute-and-storage
+  - environment
+  - human-review
+  - system-and-supersystem

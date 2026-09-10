@@ -1,0 +1,31 @@
+{
+  "protocol_version": "0.1",
+  "mode": "analysis",
+  "problem": "More retrieved documents improve potential coverage but introduce irrelevant evidence, latency, and token cost.",
+  "goal": "Maintain evidence coverage while reducing irrelevant context and avoidable processing.",
+  "ifr": "The system receives exactly the evidence needed for the current claim, using existing indexes and metadata, without losing relevant sources.",
+  "invariants": ["Consequential answers remain traceable to source fragments.", "Archived material is not silently treated as current."],
+  "claims": [
+    {"id": "E1", "kind": "evidence", "statement": "Evaluation logs contain relevant fragments displaced by lower-value results in some cases.", "source": "evaluation/report-001.json"},
+    {"id": "A1", "kind": "assumption", "statement": "Metadata filtering can reduce irrelevant candidates without harming recall.", "source": null}
+  ],
+  "functions": [
+    {"source": "retriever", "target": "answer context", "action": "supplies evidence fragments", "class": "useful"},
+    {"source": "low-value candidates", "target": "answer context", "action": "consume context capacity", "class": "harmful"}
+  ],
+  "causes": [{"id": "C1", "claim": "Candidate ranking does not use lifecycle status.", "kind": "inference", "parents": ["E1"]}],
+  "contradictions": [{
+    "type": "technical", "element": "retrieved context",
+    "requirement_a": "include more candidates to improve potential coverage",
+    "requirement_b": "include fewer candidates to reduce noise and cost",
+    "operational_zone": "context assembly", "operational_time": "before answer generation"
+  }],
+  "resources": ["existing retrieval scores", "source lifecycle metadata", "document type and date metadata", "evaluation queries with expected evidence"],
+  "solutions": [
+    {"id": "S1", "concept": "Conditional retrieval budget", "mechanism": "Estimate query ambiguity and expand the candidate budget only when evidence is weak or conflicting.", "risks": ["The estimator can suppress minority evidence."]},
+    {"id": "S2", "concept": "Retrieve broadly, rerank narrowly", "mechanism": "Retrieve broadly, apply lifecycle and metadata filters, then rerank before constructing context.", "risks": ["Reranking increases latency."]}
+  ],
+  "verification": ["Compare evidence recall and irrelevant-fragment rate on a frozen set.", "Measure context tokens and latency.", "Add regression cases for superseded and conflicting sources."],
+  "recommended_next_step": "Evaluate both concepts offline against the same frozen query set.",
+  "open_questions": ["Which lifecycle states are currently available to the retriever?"]
+}

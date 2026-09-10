@@ -1,0 +1,14 @@
+version: "0.1"
+patterns:
+  - id: conditional-depth
+    contradiction: "Analysis must be both deep and inexpensive."
+    mechanism: "Route tasks by observable complexity and risk."
+  - id: retrieval-not-residency
+    contradiction: "Context must be both comprehensive and small."
+    mechanism: "Store knowledge externally and retrieve only relevant evidence."
+  - id: proposal-before-mutation
+    contradiction: "Automation must be autonomous and controlled."
+    mechanism: "Separate proposal generation from authorized mutation."
+  - id: core-adapter-separation
+    contradiction: "A system must be portable and locally optimized."
+    mechanism: "Keep the core independent and isolate platform adapters."
