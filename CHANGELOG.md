@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 — 2026-09-11
+
+- Expanded the frozen benchmark suite to four structural cases.
+- Added suite aggregation and paired baseline/protocol comparison commands.
+- Required paired run manifests with fixed model, version, decoding, context policy, and simulation status.
+- Added benchmark JSON schemas, templates, tests, and Russian evaluation guidance.
+- Kept demonstration results explicitly marked as simulations rather than empirical evidence.
+
 ## 0.2.0 — 2026-09-11
 
 - Added `triz analyze` for prefilled analysis drafts.
