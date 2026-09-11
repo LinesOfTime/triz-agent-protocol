@@ -1,0 +1,70 @@
+{
+  "protocol_version": "0.1",
+  "mode": "lite",
+  "problem": "Two sources provide incompatible dates for the same event, and selecting either date prematurely may contaminate later conclusions.",
+  "goal": "Preserve both claims with provenance and determine what additional evidence could discriminate between them.",
+  "ifr": "The research record represents the unresolved conflict without losing provenance and resolves it only when an independent source supplies discriminating evidence.",
+  "invariants": [
+    "Neither source claim is silently discarded",
+    "An inference is not stored as an observed fact"
+  ],
+  "claims": [
+    {
+      "id": "E1",
+      "kind": "evidence",
+      "statement": "Source A records date X.",
+      "source": "source-a:page-reference"
+    },
+    {
+      "id": "E2",
+      "kind": "evidence",
+      "statement": "Source B records date Y.",
+      "source": "source-b:record-reference"
+    },
+    {
+      "id": "A1",
+      "kind": "assumption",
+      "statement": "One date may reflect a transcription or calendar conversion error.",
+      "source": null
+    }
+  ],
+  "functions": [],
+  "causes": [],
+  "contradictions": [
+    {
+      "type": "technical",
+      "element": "research conclusion",
+      "requirement_a": "must provide a usable date",
+      "requirement_b": "must not conceal unresolved source conflict",
+      "operational_zone": "event date field and evidence links",
+      "operational_time": "before downstream chronology is calculated"
+    }
+  ],
+  "resources": [
+    "source provenance",
+    "document creation dates",
+    "calendar conversion rules",
+    "independent event references"
+  ],
+  "solutions": [
+    {
+      "id": "S1",
+      "concept": "First-class conflict state",
+      "mechanism": "Store both dated claims and mark the event date unresolved until discriminating evidence appears.",
+      "risks": ["Consumers may ignore the unresolved marker"]
+    },
+    {
+      "id": "S2",
+      "concept": "Conditional chronology",
+      "mechanism": "Compute separate chronology branches for X and Y and compare which branch conflicts with independent events.",
+      "risks": ["Apparent consistency does not prove that a branch is true"]
+    }
+  ],
+  "verification": [
+    "Confirm both source references are independently retrievable",
+    "Test that downstream output displays the conflict",
+    "Reject resolution when no discriminating evidence is present"
+  ],
+  "recommended_next_step": "Record both claims and search one independent source selected before inspecting its date.",
+  "open_questions": ["Do the sources use the same calendar and event definition?"]
+}
