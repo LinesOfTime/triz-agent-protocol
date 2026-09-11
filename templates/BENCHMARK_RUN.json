@@ -1,0 +1,11 @@
+{
+  "run_id": "replace-with-run-id",
+  "paired_run_id": "replace-with-paired-run-id",
+  "suite_id": "triz-agent-protocol-suite-v1",
+  "condition": "baseline",
+  "model": "replace-with-model-name",
+  "model_version": "replace-with-exact-version",
+  "decoding": "replace-with-fixed-decoding-settings",
+  "context_policy": "describe-exactly-what-context-was-provided",
+  "simulation": false
+}
