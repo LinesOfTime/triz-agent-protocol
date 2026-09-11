@@ -17,6 +17,8 @@ Write user-facing analysis in the user's language. Preserve machine identifiers 
 
 For repository context selection, artifact drift, or coverage claims, also read `references/context-evidence.md`.
 
+When designing or interpreting an evaluation of this protocol, read `references/evaluation.md`. Do not load it for ordinary problem solving.
+
 ## Shared requirements
 
 1. Establish system boundary, facts, goal, and invariants.
