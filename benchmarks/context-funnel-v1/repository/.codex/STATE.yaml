@@ -1,0 +1,4 @@
+current_task: date-normalization
+entrypoint: src/importer.py
+release_manifest: releases/manifest.json
+required_test: tests/test_importer.py
