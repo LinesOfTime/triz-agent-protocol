@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Sequence
 
-from .benchmark import score_context_funnel
+from .benchmark import compare_runs, score_context_funnel, score_suite
 from .core import load_json, render_markdown, template, validate
 
 
@@ -30,6 +30,14 @@ def parser() -> argparse.ArgumentParser:
     benchmark.add_argument("gold")
     benchmark.add_argument("result")
     benchmark.add_argument("--output", "-o")
+    suite = commands.add_parser("benchmark-suite", help="score all results in a frozen benchmark suite")
+    suite.add_argument("suite")
+    suite.add_argument("results")
+    suite.add_argument("--output", "-o")
+    compare = commands.add_parser("compare", help="compare baseline and protocol suite scores")
+    compare.add_argument("baseline")
+    compare.add_argument("protocol")
+    compare.add_argument("--output", "-o")
     return root
 
 
@@ -47,15 +55,22 @@ def main(argv: Sequence[str] | None = None) -> int:
         path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(path)
         return 0
-    if args.command == "benchmark":
-        score = score_context_funnel(args.gold, args.result)
+    if args.command in {"benchmark", "benchmark-suite", "compare"}:
+        if args.command == "benchmark":
+            score = score_context_funnel(args.gold, args.result)
+        elif args.command == "benchmark-suite":
+            score = score_suite(args.suite, args.results)
+        else:
+            score = compare_runs(args.baseline, args.protocol)
         output = json.dumps(score, indent=2, ensure_ascii=False) + "\n"
         if args.output:
             Path(args.output).write_text(output, encoding="utf-8")
             print(args.output)
         else:
             print(output, end="")
-        return 0 if score["pass"] else 1
+        if args.command == "benchmark":
+            return 0 if score["pass"] else 1
+        return 0
     data = load_json(args.path)
     errors = validate(data)
     if args.command == "validate":
