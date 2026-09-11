@@ -1,3 +1,4 @@
+import json
 import tempfile
 import unittest
 from pathlib import Path
@@ -52,11 +53,28 @@ class ValidationTests(unittest.TestCase):
         self.assertIn("## Ideal Final Result", rendered)
         self.assertIn("Use conditional routing", rendered)
 
+    def test_russian_renderer_contains_localized_sections(self):
+        rendered = render_markdown(valid_artifact(), language="ru")
+        self.assertIn("## Идеальный конечный результат", rendered)
+        self.assertIn("## Механизмы решения", rendered)
+        self.assertIn("источник: test.log", rendered)
+
     def test_cli_refuses_overwrite(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "analysis.json"
             self.assertEqual(main(["init", str(path)]), 0)
             self.assertEqual(main(["init", str(path)]), 2)
+
+    def test_analyze_prefills_problem_and_goal(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "analysis.json"
+            self.assertEqual(main([
+                "analyze", str(path), "--problem", "Context is noisy",
+                "--goal", "Reduce noise", "--mode", "lite"
+            ]), 0)
+            data = json.loads(path.read_text(encoding="utf-8"))
+            self.assertEqual(data["problem"], "Context is noisy")
+            self.assertEqual(data["goal"], "Reduce noise")
 
 
 if __name__ == "__main__":
