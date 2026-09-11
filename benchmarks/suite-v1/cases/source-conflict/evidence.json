@@ -1,0 +1,7 @@
+{
+  "source_a": {"event": "E", "date": "1900-01-02", "provenance": "archive-a:item-10"},
+  "source_b": {"event": "E", "date": "1900-01-03", "provenance": "archive-b:item-22"},
+  "calendar_system_a": "unknown",
+  "calendar_system_b": "unknown",
+  "independent_tie_breaker": null
+}
