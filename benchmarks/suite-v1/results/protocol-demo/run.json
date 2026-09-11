@@ -1,0 +1,11 @@
+{
+  "run_id": "protocol-demo-v1",
+  "paired_run_id": "baseline-demo-v1",
+  "suite_id": "triz-agent-protocol-suite-v1",
+  "condition": "protocol",
+  "model": "demonstration-model",
+  "model_version": "not-a-real-run",
+  "decoding": "fixed-demo",
+  "context_policy": "case evidence plus frozen protocol",
+  "simulation": true
+}
