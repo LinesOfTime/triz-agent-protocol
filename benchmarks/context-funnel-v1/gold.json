@@ -1,7 +1,7 @@
 {
   "case_id": "context-funnel-v1-date-import",
   "established_before_run": true,
-  "critical_files": [
+  "critical_items": [
     ".codex/STATE.yaml",
     "AGENTS.md",
     "fixtures/sample.csv",
