@@ -1,0 +1,17 @@
+{
+  "case_id": "source-conflict-v1",
+  "discovered_items": [
+    "source A date and provenance",
+    "source B date and provenance",
+    "date conflict",
+    "calendar systems are unknown",
+    "independent tie-breaker is absent"
+  ],
+  "preserved_invariants": [
+    "preserve both source claims",
+    "do not promote either date to fact",
+    "request discriminating evidence"
+  ],
+  "unsupported_claims": [],
+  "violated_invariants": []
+}
