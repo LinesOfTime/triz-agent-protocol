@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:triz-agent-protocol:schema:benchmark-result:0.3",
+  "title": "TRIZ benchmark case result",
+  "type": "object",
+  "required": ["case_id", "discovered_items", "unsupported_claims", "violated_invariants"],
+  "properties": {
+    "case_id": {"type": "string", "minLength": 1},
+    "discovered_items": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "preserved_invariants": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+    "unsupported_claims": {"type": "array", "items": {"type": "string", "minLength": 1}},
+    "violated_invariants": {"type": "array", "items": {"type": "string", "minLength": 1}}
+  },
+  "additionalProperties": false
+}

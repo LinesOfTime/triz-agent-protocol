@@ -1,7 +1,6 @@
 {
   "case_id": "context-funnel-v1-date-import",
-  "established_before_run": true,
-  "critical_items": [
+  "discovered_items": [
     ".codex/STATE.yaml",
     "AGENTS.md",
     "fixtures/sample.csv",
@@ -11,9 +10,6 @@
     "src/writer.py",
     "tests/test_importer.py"
   ],
-  "noncritical_files": [
-    "README.md",
-    "docs/history.md"
-  ],
-  "expert_reviewed": false
+  "unsupported_claims": [],
+  "violated_invariants": []
 }

@@ -15,7 +15,7 @@ facts → functions → causes → contradictions → resources
 
 ## Состояние
 
-`0.2.0` — прикладной выпуск с русскоязычным рендером, шаблонами и первым замороженным benchmark. Программные соответствия и режим Guided ARIZ являются авторскими адаптациями и требуют более широкой экспертной проверки. Проект не является официальным стандартом ТРИЗ или системой сертификации.
+`0.3.0` — экспериментальный выпуск с четырьмя замороженными benchmark-кейсами и воспроизводимым парным сравнением baseline/protocol. Включённые демонстрационные результаты являются симуляцией и не подтверждают преимущество протокола. Программные соответствия и Guided ARIZ требуют более широкой экспертной проверки.
 
 ## Быстрый запуск
 
@@ -27,6 +27,8 @@ python -m triz_protocol analyze analysis.json --problem "Наблюдаемая 
 python -m triz_protocol validate analysis.json
 python -m triz_protocol render analysis.json --language ru --output analysis.md
 python -m triz_protocol benchmark benchmarks/context-funnel-v1/gold.json benchmarks/context-funnel-v1/result.example.json
+python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/protocol-demo --output protocol-score.json
+python -m triz_protocol compare baseline-score.json protocol-score.json --output comparison.json
 python -m unittest discover -s tests -v
 ```
 
@@ -49,7 +51,7 @@ python -m unittest discover -s tests -v
 - `examples/`, `tests/`, `benchmarks/` — примеры, тесты и проверочные наборы.
 - `templates/` — готовые формы задачи, контекстной воронки и записи решения.
 
-Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
+Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), методология оценки — в [docs/evaluation-ru.md](docs/evaluation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Ограничения
 

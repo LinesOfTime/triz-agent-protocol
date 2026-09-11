@@ -1,0 +1,18 @@
+{
+  "case_id": "safe-refactor-v1",
+  "discovered_items": [
+    "three callers",
+    "shared normalize_and_write function",
+    "transaction contract",
+    "two supported formats",
+    "undocumented caller edge cases",
+    "available verification checks"
+  ],
+  "preserved_invariants": [
+    "preserve failure atomicity",
+    "preserve supported formats",
+    "inventory caller behavior before replacement"
+  ],
+  "unsupported_claims": [],
+  "violated_invariants": []
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:triz-agent-protocol:schema:benchmark-run:0.3",
+  "title": "TRIZ benchmark run manifest",
+  "type": "object",
+  "required": ["run_id", "paired_run_id", "suite_id", "condition", "model", "model_version", "decoding", "context_policy", "simulation"],
+  "properties": {
+    "run_id": {"type": "string", "minLength": 1},
+    "paired_run_id": {"type": "string", "minLength": 1},
+    "suite_id": {"type": "string", "minLength": 1},
+    "condition": {"enum": ["baseline", "protocol"]},
+    "model": {"type": "string", "minLength": 1},
+    "model_version": {"type": "string", "minLength": 1},
+    "decoding": {"type": "string", "minLength": 1},
+    "context_policy": {"type": "string", "minLength": 1},
+    "simulation": {"type": "boolean"}
+  },
+  "additionalProperties": false
+}

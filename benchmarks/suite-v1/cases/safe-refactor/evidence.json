@@ -1,0 +1,8 @@
+{
+  "callers": ["web import", "batch import", "recovery import"],
+  "shared_function": "normalize_and_write",
+  "transaction_contract": "all rows committed or complete rollback",
+  "supported_formats": ["csv-a", "csv-b"],
+  "known_gap": "Caller-specific edge cases are not fully documented.",
+  "available_checks": ["contract tests", "failure-atomicity tests", "frozen corpus"]
+}

@@ -1,0 +1,12 @@
+{
+  "case_id": "safe-refactor-v1",
+  "discovered_items": [
+    "three callers",
+    "shared normalize_and_write function",
+    "two supported formats",
+    "available verification checks"
+  ],
+  "preserved_invariants": ["preserve supported formats"],
+  "unsupported_claims": ["All caller behavior is covered by tests"],
+  "violated_invariants": []
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "source-conflict-v1",
+  "discovered_items": [
+    "source A date and provenance",
+    "source B date and provenance",
+    "date conflict"
+  ],
+  "preserved_invariants": ["preserve both source claims"],
+  "unsupported_claims": ["Source A is more reliable"],
+  "violated_invariants": ["promoted source A date to fact"]
+}

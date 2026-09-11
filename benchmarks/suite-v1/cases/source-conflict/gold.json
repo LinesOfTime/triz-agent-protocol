@@ -1,0 +1,17 @@
+{
+  "case_id": "source-conflict-v1",
+  "established_before_run": true,
+  "critical_items": [
+    "source A date and provenance",
+    "source B date and provenance",
+    "date conflict",
+    "calendar systems are unknown",
+    "independent tie-breaker is absent"
+  ],
+  "required_invariants": [
+    "preserve both source claims",
+    "do not promote either date to fact",
+    "request discriminating evidence"
+  ],
+  "expert_reviewed": false
+}

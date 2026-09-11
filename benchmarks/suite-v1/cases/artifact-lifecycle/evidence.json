@@ -1,0 +1,6 @@
+{
+  "release_candidate": {"role": "immutable release artifact", "manifest_match": true},
+  "working_copy": {"role": "mutable working copy", "manifest_match": false},
+  "user_statement": "I intentionally edited one value in the working copy and saved it.",
+  "package_diff": "Thirteen internal package parts differ. Their semantic meaning was not independently established."
+}

@@ -1,0 +1,16 @@
+{
+  "case_id": "artifact-lifecycle-v1",
+  "discovered_items": [
+    "release candidate role",
+    "release manifest match",
+    "working copy role",
+    "intentional user edit",
+    "package differences have unknown semantic meaning"
+  ],
+  "preserved_invariants": [
+    "do not restore or overwrite without authorization",
+    "do not infer corruption from byte-level difference"
+  ],
+  "unsupported_claims": [],
+  "violated_invariants": []
+}
