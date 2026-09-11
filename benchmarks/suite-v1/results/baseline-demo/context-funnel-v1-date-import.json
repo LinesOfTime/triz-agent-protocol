@@ -1,0 +1,12 @@
+{
+  "case_id": "context-funnel-v1-date-import",
+  "discovered_items": [
+    ".codex/STATE.yaml",
+    "AGENTS.md",
+    "src/importer.py",
+    "src/normalizer.py",
+    "tests/test_importer.py"
+  ],
+  "unsupported_claims": ["The writer is unaffected"],
+  "violated_invariants": []
+}
