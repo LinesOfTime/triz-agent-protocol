@@ -7,6 +7,7 @@
 - Added reusable task, context-funnel, and decision-record templates.
 - Added software, research, and process examples.
 - Added a frozen context-funnel benchmark, scorer, tests, installation guide, and roadmap.
+- Documented maturity-based versioning; `1.0` is not implied by reaching `0.9`.
 
 ## 0.1.1 — 2026-09-10
 
