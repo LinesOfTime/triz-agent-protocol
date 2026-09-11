@@ -111,65 +111,91 @@ def validate(data: dict[str, Any]) -> list[str]:
     return errors
 
 
-def render_markdown(data: dict[str, Any]) -> str:
+def render_markdown(data: dict[str, Any], language: str = "en") -> str:
+    if language not in {"en", "ru"}:
+        raise ValueError(f"unsupported language: {language}")
+
+    labels = {
+        "en": {
+            "title": "TRIZ analysis", "protocol": "Protocol", "mode": "Mode",
+            "problem": "Problem", "goal": "Goal", "ifr": "Ideal Final Result",
+            "invariants": "Invariants", "claims": "Claims", "source": "source",
+            "contradictions": "Contradictions", "resources": "Resources",
+            "solutions": "Solution concepts", "risks": "Risks",
+            "verification": "Verification", "next": "Recommended next step",
+            "questions": "Open questions", "none": "None recorded",
+            "not_selected": "Not selected",
+        },
+        "ru": {
+            "title": "Анализ ТРИЗ", "protocol": "Протокол", "mode": "Режим",
+            "problem": "Проблема", "goal": "Цель", "ifr": "Идеальный конечный результат",
+            "invariants": "Неизменяемые условия", "claims": "Утверждения", "source": "источник",
+            "contradictions": "Противоречия", "resources": "Ресурсы",
+            "solutions": "Механизмы решения", "risks": "Риски",
+            "verification": "Проверка", "next": "Рекомендуемый следующий шаг",
+            "questions": "Открытые вопросы", "none": "Не зафиксировано",
+            "not_selected": "Не выбран",
+        },
+    }[language]
+
     def bullets(values: list[Any]) -> str:
-        return "\n".join(f"- {value}" for value in values) or "- None recorded"
+        return "\n".join(f"- {value}" for value in values) or f"- {labels['none']}"
 
     claims = [f"- **{c.get('id', '?')} — {c.get('kind', '?')}:** {c.get('statement', '')}" +
-              (f" _(source: {c['source']})_" if c.get("source") else "")
+              (f" _({labels['source']}: {c['source']})_" if c.get("source") else "")
               for c in data.get("claims", []) if isinstance(c, dict)]
     contradictions = [f"- **{c.get('type', '?')} — {c.get('element', '?')}:** "
                       f"{c.get('requirement_a', '')} ↔ {c.get('requirement_b', '')}"
                       for c in data.get("contradictions", []) if isinstance(c, dict)]
     solutions = [f"### {s.get('id', '?')}: {s.get('concept', '')}\n\n{s.get('mechanism', '')}"
-                 f"\n\nRisks:\n{bullets(s.get('risks', []))}"
+                 f"\n\n{labels['risks']}:\n{bullets(s.get('risks', []))}"
                  for s in data.get("solutions", []) if isinstance(s, dict)]
-    return f"""# TRIZ analysis
+    return f"""# {labels['title']}
 
-**Protocol:** {data.get('protocol_version', '?')}
-**Mode:** {data.get('mode', '?')}
+**{labels['protocol']}:** {data.get('protocol_version', '?')}
+**{labels['mode']}:** {data.get('mode', '?')}
 
-## Problem
+## {labels['problem']}
 
 {data.get('problem', '')}
 
-## Goal
+## {labels['goal']}
 
 {data.get('goal', '')}
 
-## Ideal Final Result
+## {labels['ifr']}
 
 {data.get('ifr', '')}
 
-## Invariants
+## {labels['invariants']}
 
 {bullets(data.get('invariants', []))}
 
-## Claims
+## {labels['claims']}
 
-{chr(10).join(claims) or '- None recorded'}
+{chr(10).join(claims) or '- ' + labels['none']}
 
-## Contradictions
+## {labels['contradictions']}
 
-{chr(10).join(contradictions) or '- None recorded'}
+{chr(10).join(contradictions) or '- ' + labels['none']}
 
-## Resources
+## {labels['resources']}
 
 {bullets(data.get('resources', []))}
 
-## Solution concepts
+## {labels['solutions']}
 
-{chr(10).join(solutions) or 'None recorded'}
+{chr(10).join(solutions) or labels['none']}
 
-## Verification
+## {labels['verification']}
 
 {bullets(data.get('verification', []))}
 
-## Recommended next step
+## {labels['next']}
 
-{data.get('recommended_next_step') or 'Not selected'}
+{data.get('recommended_next_step') or labels['not_selected']}
 
-## Open questions
+## {labels['questions']}
 
 {bullets(data.get('open_questions', []))}
 """
