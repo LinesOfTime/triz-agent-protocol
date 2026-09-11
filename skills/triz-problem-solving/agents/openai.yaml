@@ -1,4 +1,4 @@
 interface:
-  display_name: "TRIZ Problem Solving"
-  short_description: "Structured TRIZ analysis for difficult problems"
-  default_prompt: "Use $triz-problem-solving to analyze this contradiction and propose verifiable solutions."
+  display_name: "Решение задач с ТРИЗ"
+  short_description: "Проверяемый анализ сложных противоречий"
+  default_prompt: "Используй $triz-problem-solving для анализа противоречия и предложи проверяемые механизмы решения."
