@@ -1,0 +1,11 @@
+{
+  "case_id": "artifact-lifecycle-v1",
+  "discovered_items": [
+    "release manifest match",
+    "working copy role",
+    "intentional user edit"
+  ],
+  "preserved_invariants": [],
+  "unsupported_claims": ["The working copy is corrupt"],
+  "violated_invariants": ["recommended restore without authorization"]
+}
