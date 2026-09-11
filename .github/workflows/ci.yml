@@ -28,3 +28,8 @@ jobs:
           done
       - name: Run frozen context benchmark
         run: python -m triz_protocol benchmark benchmarks/context-funnel-v1/gold.json benchmarks/context-funnel-v1/result.example.json
+      - name: Run frozen benchmark suite
+        run: |
+          python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/baseline-demo --output baseline-score.json
+          python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/protocol-demo --output protocol-score.json
+          python -m triz_protocol compare baseline-score.json protocol-score.json --output comparison.json
