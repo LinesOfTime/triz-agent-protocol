@@ -1,0 +1,64 @@
+{
+  "protocol_version": "0.1",
+  "mode": "lite",
+  "problem": "A team needs a project tool quickly, but early adoption can create migration cost before actual workflow needs are known.",
+  "goal": "Obtain real usage evidence without committing project data to an irreversible structure.",
+  "ifr": "The team learns which tool fits by using existing representative work while all project data remains exportable and the trial can be stopped without migration loss.",
+  "invariants": [
+    "Original project data remains available",
+    "The trial does not require a long-term paid commitment"
+  ],
+  "claims": [
+    {
+      "id": "E1",
+      "kind": "evidence",
+      "statement": "The candidate tools support data export in documented formats.",
+      "source": "frozen vendor export documentation reviewed for the trial"
+    },
+    {
+      "id": "A1",
+      "kind": "assumption",
+      "statement": "A representative two-week task set will expose the main workflow differences.",
+      "source": null
+    }
+  ],
+  "functions": [],
+  "causes": [],
+  "contradictions": [
+    {
+      "type": "technical",
+      "element": "tool adoption",
+      "requirement_a": "must begin quickly to generate usage evidence",
+      "requirement_b": "must avoid commitment before evidence exists",
+      "operational_zone": "trial workspace",
+      "operational_time": "evaluation period"
+    }
+  ],
+  "resources": [
+    "representative task set",
+    "export formats",
+    "temporary workspace",
+    "predefined acceptance criteria"
+  ],
+  "solutions": [
+    {
+      "id": "S1",
+      "concept": "Time-boxed parallel trial",
+      "mechanism": "Run the same representative tasks in two isolated trial workspaces and score predefined outcomes.",
+      "risks": ["Parallel entry adds short-term work"]
+    },
+    {
+      "id": "S2",
+      "concept": "Adapter-first pilot",
+      "mechanism": "Keep the source data in a neutral format and synchronize only the fields required for the pilot.",
+      "risks": ["The adapter may hide tool-specific limitations"]
+    }
+  ],
+  "verification": [
+    "Export and re-import trial data before selection",
+    "Measure task completion time and missing workflow capabilities",
+    "Stop the trial if an invariant is violated"
+  ],
+  "recommended_next_step": "Freeze a representative task set and verify export round-trips before entering live project data.",
+  "open_questions": ["Which workflows are frequent enough to determine selection?"]
+}

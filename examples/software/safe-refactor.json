@@ -1,0 +1,64 @@
+{
+  "protocol_version": "0.1",
+  "mode": "lite",
+  "problem": "A shared import function must be simplified, but several callers depend on undocumented edge-case behavior.",
+  "goal": "Reduce implementation complexity without changing accepted inputs, outputs, or failure atomicity.",
+  "ifr": "The import function becomes simpler using existing tests and adapters while all observed caller contracts and data-safety invariants remain unchanged.",
+  "invariants": [
+    "No partial write is committed after a failed import",
+    "Existing supported input formats remain accepted"
+  ],
+  "claims": [
+    {
+      "id": "E1",
+      "kind": "evidence",
+      "statement": "Three production callers invoke the shared import function.",
+      "source": "rg call-site inventory at frozen commit"
+    },
+    {
+      "id": "A1",
+      "kind": "assumption",
+      "statement": "Caller-specific adapters can preserve edge-case behavior.",
+      "source": null
+    }
+  ],
+  "functions": [],
+  "causes": [],
+  "contradictions": [
+    {
+      "type": "technical",
+      "element": "shared import function",
+      "requirement_a": "must be simpler and uniform",
+      "requirement_b": "must retain caller-specific behavior",
+      "operational_zone": "input normalization boundary",
+      "operational_time": "before validation and transaction commit"
+    }
+  ],
+  "resources": [
+    "existing caller inventory",
+    "contract tests",
+    "transaction boundary",
+    "caller-specific adapters"
+  ],
+  "solutions": [
+    {
+      "id": "S1",
+      "concept": "Compatibility adapters",
+      "mechanism": "Move caller-specific normalization into explicit adapters and keep one narrow transaction core.",
+      "risks": ["An undocumented behavior may be omitted from an adapter"]
+    },
+    {
+      "id": "S2",
+      "concept": "Parallel replacement",
+      "mechanism": "Run the old and new implementations against a frozen corpus and switch only after output equivalence is established.",
+      "risks": ["The frozen corpus may not cover rare production inputs"]
+    }
+  ],
+  "verification": [
+    "Freeze caller contracts before editing",
+    "Run failure-atomicity tests",
+    "Compare old and new outputs on representative and adversarial inputs"
+  ],
+  "recommended_next_step": "Build a read-only caller and behavior inventory before changing the shared function.",
+  "open_questions": ["Which observed behaviors are contractual rather than accidental?"]
+}

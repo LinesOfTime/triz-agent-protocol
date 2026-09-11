@@ -1,5 +1,14 @@
 # Changelog
 
+## 0.2.0 — 2026-09-11
+
+- Added `triz analyze` for prefilled analysis drafts.
+- Added Russian Markdown rendering and Russian skill interface metadata.
+- Added reusable task, context-funnel, and decision-record templates.
+- Added software, research, and process examples.
+- Added a frozen context-funnel benchmark, scorer, tests, installation guide, and roadmap.
+- Documented maturity-based versioning; `1.0` is not implied by reaching `0.9`.
+
 ## 0.1.1 — 2026-09-10
 
 - Added progressive context-funnel guidance for repository evidence.

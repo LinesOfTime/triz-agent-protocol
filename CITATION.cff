@@ -2,8 +2,8 @@ cff-version: 1.2.0
 message: "If you use this protocol in research, cite the repository release."
 title: "TRIZ Agent Protocol"
 type: software
-version: 0.1.0
-date-released: 2026-09-10
+version: 0.2.0
+date-released: 2026-09-11
 license: MIT
 authors:
   - name: "TRIZ Agent Protocol contributors"

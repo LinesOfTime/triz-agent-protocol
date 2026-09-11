@@ -15,7 +15,7 @@ facts → functions → causes → contradictions → resources
 
 ## Состояние
 
-`0.1.1` — рабочая основа протокола. Программные соответствия и режим Guided ARIZ являются авторскими адаптациями и требуют более широкой экспертной проверки. Проект не является официальным стандартом ТРИЗ или системой сертификации.
+`0.2.0` — прикладной выпуск с русскоязычным рендером, шаблонами и первым замороженным benchmark. Программные соответствия и режим Guided ARIZ являются авторскими адаптациями и требуют более широкой экспертной проверки. Проект не является официальным стандартом ТРИЗ или системой сертификации.
 
 ## Быстрый запуск
 
@@ -23,8 +23,10 @@ facts → functions → causes → contradictions → resources
 
 ```bash
 python -m triz_protocol init analysis.json --mode lite
+python -m triz_protocol analyze analysis.json --problem "Наблюдаемая проблема" --goal "Проверяемая цель"
 python -m triz_protocol validate analysis.json
-python -m triz_protocol render analysis.json --output analysis.md
+python -m triz_protocol render analysis.json --language ru --output analysis.md
+python -m triz_protocol benchmark benchmarks/context-funnel-v1/gold.json benchmarks/context-funnel-v1/result.example.json
 python -m unittest discover -s tests -v
 ```
 
@@ -45,6 +47,9 @@ python -m unittest discover -s tests -v
 - `skills/` — переносимый навык для ИИ-агента;
 - `triz_protocol/` — автономный CLI и валидатор;
 - `examples/`, `tests/`, `benchmarks/` — примеры, тесты и проверочные наборы.
+- `templates/` — готовые формы задачи, контекстной воронки и записи решения.
+
+Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Ограничения
 

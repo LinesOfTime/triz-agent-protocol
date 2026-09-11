@@ -1,0 +1,5 @@
+{
+  "entrypoint": "src/importer.py",
+  "required_test": "tests/test_importer.py",
+  "fixture": "fixtures/sample.csv"
+}

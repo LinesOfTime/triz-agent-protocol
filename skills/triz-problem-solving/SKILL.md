@@ -7,6 +7,8 @@ description: Structure difficult engineering, software, research, or process pro
 
 Produce concise, reviewable problem models and solution concepts. Do not claim hidden reasoning or expert certification. LLM assertions are not evidence.
 
+Write user-facing analysis in the user's language. Preserve machine identifiers and source references exactly.
+
 ## Select the lightest sufficient mode
 
 - **Lite:** bounded non-trivial problem. Read `references/triz-lite.md`.
