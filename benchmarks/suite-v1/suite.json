@@ -1,0 +1,11 @@
+{
+  "suite_id": "triz-agent-protocol-suite-v1",
+  "frozen_at": "2026-09-11",
+  "expert_reviewed": false,
+  "cases": [
+    {"id": "context-funnel-v1-date-import", "gold": "../context-funnel-v1/gold.json"},
+    {"id": "artifact-lifecycle-v1", "gold": "cases/artifact-lifecycle/gold.json"},
+    {"id": "source-conflict-v1", "gold": "cases/source-conflict/gold.json"},
+    {"id": "safe-refactor-v1", "gold": "cases/safe-refactor/gold.json"}
+  ]
+}
