@@ -1,6 +1,6 @@
 {
   "case_id": "context-funnel-v1-date-import",
-  "discovered_files": [
+  "discovered_items": [
     ".codex/STATE.yaml",
     "AGENTS.md",
     "fixtures/sample.csv",
