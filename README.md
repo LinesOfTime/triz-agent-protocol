@@ -49,7 +49,7 @@ python -m unittest discover -s tests -v
 - `examples/`, `tests/`, `benchmarks/` — примеры, тесты и проверочные наборы.
 - `templates/` — готовые формы задачи, контекстной воронки и записи решения.
 
-Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md).
+Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Ограничения
 
