@@ -41,5 +41,6 @@ jobs:
       - name: Prepare isolated experiment packets
         run: |
           python -m triz_protocol prepare-experiment benchmarks/suite-v1/suite.json experiment-ci --protocol-path skills/triz-problem-solving --pair-id ci-pair --model test-model --model-version test-version --decoding fixed
+          python -m triz_protocol verify-experiment experiment-ci
           test ! -e experiment-ci/baseline/protocol
           test -e experiment-ci/protocol/protocol/SKILL.md
