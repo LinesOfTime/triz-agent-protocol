@@ -27,9 +27,14 @@
 ## Команды
 
 ```bash
+triz prepare-experiment benchmarks/suite-v1/suite.json experiment-001 \
+  --protocol-path skills/triz-problem-solving \
+  --pair-id pair-001 --model MODEL --model-version VERSION --decoding FIXED
 triz benchmark-suite benchmarks/suite-v1/suite.json results/baseline --output baseline-score.json
 triz benchmark-suite benchmarks/suite-v1/suite.json results/protocol --output protocol-score.json
 triz compare baseline-score.json protocol-score.json --output comparison.json
 ```
+
+`prepare-experiment` копирует только объявленные в `suite.json` материалы. В baseline-пакете нет протокола, в protocol-пакете он зафиксирован отдельно. `gold.json` и каталоги результатов запрещены; SHA-256 входов записываются в оба `run.json`. Ответы модели по-прежнему запускаются и сохраняются оператором: CLI их не имитирует.
 
 Положительная дельта recall, precision и pass rate означает улучшение. Для неподтверждённых утверждений и нарушений инвариантов улучшением является отрицательная дельта. Само наличие дельты не устанавливает статистическую значимость.

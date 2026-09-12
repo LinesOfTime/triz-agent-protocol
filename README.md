@@ -15,7 +15,7 @@ facts → functions → causes → contradictions → resources
 
 ## Состояние
 
-`0.3.0` — экспериментальный выпуск с четырьмя замороженными benchmark-кейсами и воспроизводимым парным сравнением baseline/protocol. Включённые демонстрационные результаты являются симуляцией и не подтверждают преимущество протокола. Программные соответствия и Guided ARIZ требуют более широкой экспертной проверки.
+`0.3.1` — совместимое усиление экспериментальной ветки `0.3`: изолированные пакеты baseline/protocol, контрольные суммы входов, безопасная запись файлов и более строгая проверка парных прогонов. Включённые демонстрационные результаты являются симуляцией и не подтверждают преимущество протокола.
 
 ## Быстрый запуск
 
@@ -27,6 +27,7 @@ python -m triz_protocol analyze analysis.json --problem "Наблюдаемая 
 python -m triz_protocol validate analysis.json
 python -m triz_protocol render analysis.json --language ru --output analysis.md
 python -m triz_protocol benchmark benchmarks/context-funnel-v1/gold.json benchmarks/context-funnel-v1/result.example.json
+python -m triz_protocol prepare-experiment benchmarks/suite-v1/suite.json experiment-001 --protocol-path skills/triz-problem-solving --pair-id pair-001 --model MODEL --model-version VERSION --decoding FIXED
 python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/protocol-demo --output protocol-score.json
 python -m triz_protocol compare baseline-score.json protocol-score.json --output comparison.json
 python -m unittest discover -s tests -v
@@ -51,7 +52,7 @@ python -m unittest discover -s tests -v
 - `examples/`, `tests/`, `benchmarks/` — примеры, тесты и проверочные наборы.
 - `templates/` — готовые формы задачи, контекстной воронки и записи решения.
 
-Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), методология оценки — в [docs/evaluation-ru.md](docs/evaluation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
+Подробная установка описана в [docs/installation-ru.md](docs/installation-ru.md), команды — в [docs/commands-ru.md](docs/commands-ru.md), интеграция — в [docs/project-integration-ru.md](docs/project-integration-ru.md), методология оценки — в [docs/evaluation-ru.md](docs/evaluation-ru.md), краткая методология — в [docs/methodology-ru.md](docs/methodology-ru.md), термины — в [docs/terminology-ru.md](docs/terminology-ru.md), план развития — в [docs/ROADMAP.md](docs/ROADMAP.md), правила нумерации — в [docs/VERSIONING.md](docs/VERSIONING.md).
 
 ## Ограничения
 
@@ -60,7 +61,7 @@ python -m unittest discover -s tests -v
 - Репозиторий не содержит скопированных матриц противоречий, текстов стандартных решений, учебных материалов или сторонних разборов.
 - Значимые решения требуют профильной экспертизы и независимой проверки.
 
-См. [CONTRIBUTING.md](CONTRIBUTING.md) и [docs/limitations.md](docs/limitations.md).
+См. [CONTRIBUTING.md](CONTRIBUTING.md), [ограничения на русском](docs/limitations-ru.md) и [полный англоязычный перечень](docs/limitations.md).
 
 ## Лицензия
 

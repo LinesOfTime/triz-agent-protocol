@@ -12,6 +12,14 @@ def _load(path: str | Path) -> dict[str, Any]:
     return value
 
 
+def _string_list(value: Any, field: str) -> list[str]:
+    if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
+        raise ValueError(f"{field} must be a list of non-empty strings")
+    if len(value) != len(set(value)):
+        raise ValueError(f"{field} must not contain duplicates")
+    return value
+
+
 def score_case(gold_path: str | Path, result_path: str | Path) -> dict[str, Any]:
     gold = _load(gold_path)
     result = _load(result_path)
@@ -20,13 +28,13 @@ def score_case(gold_path: str | Path, result_path: str | Path) -> dict[str, Any]
     if not gold.get("established_before_run"):
         raise ValueError("gold set must be established before the evaluated run")
 
-    expected = set(gold.get("critical_items", gold.get("critical_files", [])))
-    discovered = set(result.get("discovered_items", result.get("discovered_files", [])))
-    required_invariants = set(gold.get("required_invariants", []))
-    preserved_invariants = set(result.get("preserved_invariants", []))
+    expected = set(_string_list(gold.get("critical_items", gold.get("critical_files", [])), "critical_items"))
+    discovered = set(_string_list(result.get("discovered_items", result.get("discovered_files", [])), "discovered_items"))
+    required_invariants = set(_string_list(gold.get("required_invariants", []), "required_invariants"))
+    preserved_invariants = set(_string_list(result.get("preserved_invariants", []), "preserved_invariants"))
     missing_invariants = required_invariants - preserved_invariants
-    unsupported = list(result.get("unsupported_claims", []))
-    violated = list(result.get("violated_invariants", []))
+    unsupported = _string_list(result.get("unsupported_claims", []), "unsupported_claims")
+    violated = _string_list(result.get("violated_invariants", []), "violated_invariants")
 
     if not expected:
         raise ValueError("gold set must contain critical_items or critical_files")
@@ -72,6 +80,8 @@ def score_suite(suite_path: str | Path, results_path: str | Path) -> dict[str, A
     for field in ("run_id", "paired_run_id", "model", "model_version", "decoding"):
         if not run.get(field):
             raise ValueError(f"run manifest requires {field}")
+    if not isinstance(run.get("simulation"), bool):
+        raise ValueError("run manifest requires boolean simulation")
     case_scores = []
     for case in suite.get("cases", []):
         gold_path = suite_file.parent / case["gold"]
@@ -109,6 +119,12 @@ def compare_runs(baseline_path: str | Path, protocol_path: str | Path) -> dict[s
     for field in ("model", "model_version", "decoding"):
         if baseline_run.get(field) != protocol_run.get(field):
             raise ValueError(f"paired runs differ in {field}")
+    for field in ("suite_sha256", "material_sha256"):
+        if field in baseline_run or field in protocol_run:
+            if baseline_run.get(field) != protocol_run.get(field):
+                raise ValueError(f"paired runs differ in {field}")
+    if baseline_run.get("protocol_sha256"):
+        raise ValueError("baseline run must not include protocol files")
     return {
         "suite_id": baseline["suite_id"],
         "case_count": baseline["case_count"],

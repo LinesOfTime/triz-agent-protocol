@@ -1,0 +1,21 @@
+name: Улучшение
+description: Предложить проверяемое изменение
+title: "[Proposal]: "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Наблюдаемая проблема
+    validations:
+      required: true
+  - type: textarea
+    id: goal
+    attributes:
+      label: Проверяемый результат
+    validations:
+      required: true
+  - type: textarea
+    id: invariants
+    attributes:
+      label: Что нельзя ухудшить?

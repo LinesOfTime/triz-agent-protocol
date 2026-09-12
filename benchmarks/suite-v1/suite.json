@@ -3,9 +3,9 @@
   "frozen_at": "2026-09-11",
   "expert_reviewed": false,
   "cases": [
-    {"id": "context-funnel-v1-date-import", "gold": "../context-funnel-v1/gold.json"},
-    {"id": "artifact-lifecycle-v1", "gold": "cases/artifact-lifecycle/gold.json"},
-    {"id": "source-conflict-v1", "gold": "cases/source-conflict/gold.json"},
-    {"id": "safe-refactor-v1", "gold": "cases/safe-refactor/gold.json"}
+    {"id": "context-funnel-v1-date-import", "gold": "../context-funnel-v1/gold.json", "materials": ["../context-funnel-v1/task.md", "../context-funnel-v1/repository"]},
+    {"id": "artifact-lifecycle-v1", "gold": "cases/artifact-lifecycle/gold.json", "materials": ["cases/artifact-lifecycle/task.md", "cases/artifact-lifecycle/evidence.json"]},
+    {"id": "source-conflict-v1", "gold": "cases/source-conflict/gold.json", "materials": ["cases/source-conflict/task.md", "cases/source-conflict/evidence.json"]},
+    {"id": "safe-refactor-v1", "gold": "cases/safe-refactor/gold.json", "materials": ["cases/safe-refactor/task.md", "cases/safe-refactor/evidence.json"]}
   ]
 }

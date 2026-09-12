@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "triz-agent-protocol"
-version = "0.3.0"
+version = "0.3.1"
 description = "Model-agnostic, evidence-aware TRIZ protocol for AI-assisted problem solving"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -16,6 +16,10 @@ classifiers = [
   "Programming Language :: Python :: 3",
   "Topic :: Scientific/Engineering"
 ]
+
+[project.urls]
+Repository = "https://github.com/LinesOfTime/triz-agent-protocol"
+Issues = "https://github.com/LinesOfTime/triz-agent-protocol/issues"
 
 [project.scripts]
 triz = "triz_protocol.cli:main"

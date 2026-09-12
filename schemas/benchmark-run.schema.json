@@ -13,7 +13,16 @@
     "model_version": {"type": "string", "minLength": 1},
     "decoding": {"type": "string", "minLength": 1},
     "context_policy": {"type": "string", "minLength": 1},
-    "simulation": {"type": "boolean"}
+    "simulation": {"type": "boolean"},
+    "suite_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "material_sha256": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    },
+    "protocol_sha256": {
+      "type": "object",
+      "additionalProperties": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+    }
   },
   "additionalProperties": false
 }

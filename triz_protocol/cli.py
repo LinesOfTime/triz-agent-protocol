@@ -2,11 +2,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 from pathlib import Path
 from typing import Sequence
 
 from .benchmark import compare_runs, score_context_funnel, score_suite
 from .core import load_json, render_markdown, template, validate
+from .experiment import prepare_experiment
+from .io import atomic_write_text
 
 
 def parser() -> argparse.ArgumentParser:
@@ -38,10 +41,18 @@ def parser() -> argparse.ArgumentParser:
     compare.add_argument("baseline")
     compare.add_argument("protocol")
     compare.add_argument("--output", "-o")
+    prepare = commands.add_parser("prepare-experiment", help="create isolated baseline and protocol packets")
+    prepare.add_argument("suite")
+    prepare.add_argument("output")
+    prepare.add_argument("--protocol-path", required=True)
+    prepare.add_argument("--pair-id", required=True)
+    prepare.add_argument("--model", required=True)
+    prepare.add_argument("--model-version", required=True)
+    prepare.add_argument("--decoding", required=True)
     return root
 
 
-def main(argv: Sequence[str] | None = None) -> int:
+def _main(argv: Sequence[str] | None = None) -> int:
     args = parser().parse_args(argv)
     if args.command in {"init", "analyze"}:
         path = Path(args.path)
@@ -52,8 +63,15 @@ def main(argv: Sequence[str] | None = None) -> int:
         if args.command == "analyze":
             data["problem"] = args.problem
             data["goal"] = args.goal
-        path.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        atomic_write_text(path, json.dumps(data, indent=2, ensure_ascii=False) + "\n")
         print(path)
+        return 0
+    if args.command == "prepare-experiment":
+        prepared = prepare_experiment(
+            args.suite, args.output, args.protocol_path, pair_id=args.pair_id,
+            model=args.model, model_version=args.model_version, decoding=args.decoding,
+        )
+        print(json.dumps(prepared, ensure_ascii=False))
         return 0
     if args.command in {"benchmark", "benchmark-suite", "compare"}:
         if args.command == "benchmark":
@@ -64,7 +82,7 @@ def main(argv: Sequence[str] | None = None) -> int:
             score = compare_runs(args.baseline, args.protocol)
         output = json.dumps(score, indent=2, ensure_ascii=False) + "\n"
         if args.output:
-            Path(args.output).write_text(output, encoding="utf-8")
+            atomic_write_text(args.output, output)
             print(args.output)
         else:
             print(output, end="")
@@ -86,11 +104,19 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
     output = render_markdown(data, language=args.language)
     if args.output:
-        Path(args.output).write_text(output, encoding="utf-8")
+        atomic_write_text(args.output, output)
         print(args.output)
     else:
         print(output)
     return 0
+
+
+def main(argv: Sequence[str] | None = None) -> int:
+    try:
+        return _main(argv)
+    except (FileExistsError, FileNotFoundError, json.JSONDecodeError, KeyError, OSError, ValueError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
 
 
 if __name__ == "__main__":
