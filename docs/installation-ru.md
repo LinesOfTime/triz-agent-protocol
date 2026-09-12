@@ -9,13 +9,19 @@
 Требуется Python 3.10 или новее.
 
 ```powershell
+cd $HOME
 git clone https://github.com/LinesOfTime/triz-agent-protocol.git
 cd triz-agent-protocol
-py -m pip install -e .
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip
+python -m pip install -e .
 triz analyze analysis.json --problem "Опишите проблему" --goal "Опишите проверяемую цель"
 triz validate analysis.json
 triz render analysis.json --language ru --output analysis.md
 ```
+
+Если PowerShell открыт в `C:\Windows\System32`, команда `cd triz-agent-protocol` ищет репозиторий именно внутри системного каталога. Сначала перейдите в каталог, куда выполнялся `git clone` (например, `cd $HOME`), либо укажите полный путь.
 
 `analyze` создаёт черновик, а не завершённое решение. До заполнения обязательных полей команда `validate` должна сообщать об ошибках.
 

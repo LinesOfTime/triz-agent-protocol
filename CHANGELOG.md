@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 — 2026-09-12
+
+- Added isolated baseline/protocol experiment packets with SHA-256 manifests.
+- Prevented gold sets and result directories from entering model packets.
+- Hardened paired-run validation, CLI error reporting, and atomic output writes.
+- Added packaging, Markdown-link, security, and dependency maintenance checks.
+- Expanded Russian command, Windows installation, integration, limitation, and release guidance.
+
 ## 0.3.0 — 2026-09-11
 
 - Expanded the frozen benchmark suite to four structural cases.

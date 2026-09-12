@@ -6,4 +6,6 @@ Run paired conditions with the same exact model version, decoding settings, tool
 
 Freeze the gold set before runs and keep it outside model context. Record all runs, including failures. Mark fabricated or demonstration outputs as simulations; never use them as evidence of benefit.
 
+For reproducible comparisons, record hashes of the suite, task materials, and frozen protocol. Reject a pair when material hashes differ or when protocol files appear in the baseline condition.
+
 Measure critical-item recall and precision, unsupported claims, invariant violations, and pass rate. Do not infer creativity, practical usefulness, statistical significance, or conformity with classical TRIZ from these structural measures.

@@ -21,6 +21,11 @@ jobs:
           python-version: ${{ matrix.python-version }}
       - run: python -m compileall -q triz_protocol tests
       - run: python -m unittest discover -s tests -v
+      - run: python scripts/check_markdown_links.py
+      - name: Verify editable installation and entry point
+        run: |
+          python -m pip install --no-deps --no-build-isolation -e .
+          triz --help
       - name: Validate examples
         run: |
           for example in examples/*/*.json; do
@@ -33,3 +38,8 @@ jobs:
           python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/baseline-demo --output baseline-score.json
           python -m triz_protocol benchmark-suite benchmarks/suite-v1/suite.json benchmarks/suite-v1/results/protocol-demo --output protocol-score.json
           python -m triz_protocol compare baseline-score.json protocol-score.json --output comparison.json
+      - name: Prepare isolated experiment packets
+        run: |
+          python -m triz_protocol prepare-experiment benchmarks/suite-v1/suite.json experiment-ci --protocol-path skills/triz-problem-solving --pair-id ci-pair --model test-model --model-version test-version --decoding fixed
+          test ! -e experiment-ci/baseline/protocol
+          test -e experiment-ci/protocol/protocol/SKILL.md

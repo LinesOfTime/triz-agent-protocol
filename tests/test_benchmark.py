@@ -1,10 +1,13 @@
 import json
+import io
 import tempfile
 import unittest
+from contextlib import redirect_stderr
 from pathlib import Path
 
 from triz_protocol.benchmark import compare_runs, score_context_funnel, score_suite
 from triz_protocol.cli import main
+from triz_protocol.experiment import prepare_experiment
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -66,6 +69,55 @@ class BenchmarkTests(unittest.TestCase):
             protocol_path.write_text(json.dumps(protocol), encoding="utf-8")
             with self.assertRaises(ValueError):
                 compare_runs(base_path, protocol_path)
+
+    def test_compare_rejects_different_material_hashes(self):
+        baseline = score_suite(SUITE / "suite.json", SUITE / "results/baseline-demo")
+        protocol = score_suite(SUITE / "suite.json", SUITE / "results/protocol-demo")
+        baseline["run"]["material_sha256"] = {"task.md": "a" * 64}
+        protocol["run"]["material_sha256"] = {"task.md": "b" * 64}
+        with tempfile.TemporaryDirectory() as directory:
+            base_path = Path(directory) / "baseline.json"
+            protocol_path = Path(directory) / "protocol.json"
+            base_path.write_text(json.dumps(baseline), encoding="utf-8")
+            protocol_path.write_text(json.dumps(protocol), encoding="utf-8")
+            with self.assertRaisesRegex(ValueError, "material_sha256"):
+                compare_runs(base_path, protocol_path)
+
+    def test_prepare_experiment_isolates_gold_and_records_hashes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "packet"
+            prepared = prepare_experiment(
+                SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
+                pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
+            )
+            self.assertEqual(prepared["conditions"], ["baseline", "protocol"])
+            self.assertFalse(any(output.rglob("gold.json")))
+            baseline = json.loads((output / "baseline/run.json").read_text(encoding="utf-8"))
+            protocol = json.loads((output / "protocol/run.json").read_text(encoding="utf-8"))
+            self.assertEqual(baseline["material_sha256"], protocol["material_sha256"])
+            self.assertEqual(baseline["protocol_sha256"], {})
+            self.assertTrue(protocol["protocol_sha256"])
+
+    def test_prepare_experiment_refuses_overwrite(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "packet"
+            output.mkdir()
+            with self.assertRaises(FileExistsError):
+                prepare_experiment(
+                    SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
+                    pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
+                )
+
+    def test_cli_reports_malformed_json_without_traceback(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "bad.json"
+            path.write_text("{", encoding="utf-8")
+            stderr = io.StringIO()
+            with redirect_stderr(stderr):
+                code = main(["validate", str(path)])
+            self.assertEqual(code, 2)
+            self.assertIn("ERROR:", stderr.getvalue())
+            self.assertNotIn("Traceback", stderr.getvalue())
 
     def test_suite_rejects_mismatched_case_id(self):
         result = json.loads((SUITE / "results/protocol-demo/source-conflict-v1.json").read_text(encoding="utf-8"))
