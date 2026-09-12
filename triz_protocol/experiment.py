@@ -105,3 +105,57 @@ def prepare_experiment(
             shutil.rmtree(staging)
         raise
     return {"output": str(output), "pair_id": pair_id, "conditions": ["baseline", "protocol"]}
+
+
+def _verify_hashes(condition_dir: Path, recorded: Any, prefix: str) -> list[str]:
+    if not isinstance(recorded, dict):
+        return [f"{prefix} hash manifest must be an object"]
+    actual_root = condition_dir / prefix
+    actual = {
+        item.relative_to(condition_dir).as_posix(): _sha256(item)
+        for item in _files(actual_root)
+    } if actual_root.exists() else {}
+    errors = []
+    for relative, expected in recorded.items():
+        if actual.get(relative) != expected:
+            errors.append(f"hash mismatch or missing file: {condition_dir.name}/{relative}")
+    for relative in sorted(set(actual) - set(recorded)):
+        errors.append(f"unexpected file: {condition_dir.name}/{relative}")
+    return errors
+
+
+def verify_experiment(packet_path: str | Path) -> dict[str, Any]:
+    packet = Path(packet_path).resolve()
+    errors: list[str] = []
+    runs: dict[str, dict[str, Any]] = {}
+    for condition in ("baseline", "protocol"):
+        condition_dir = packet / condition
+        run_file = condition_dir / "run.json"
+        if not run_file.is_file():
+            errors.append(f"missing manifest: {condition}/run.json")
+            continue
+        run = json.loads(run_file.read_text(encoding="utf-8"))
+        runs[condition] = run
+        if run.get("condition") != condition:
+            errors.append(f"condition mismatch: {condition}/run.json")
+        errors.extend(_verify_hashes(condition_dir, run.get("material_sha256"), "cases"))
+        errors.extend(_verify_hashes(condition_dir, run.get("protocol_sha256"), "protocol"))
+
+    forbidden = [
+        item.relative_to(packet).as_posix()
+        for item in _files(packet)
+        if item.name.casefold() == "gold.json"
+        or "results" in {part.casefold() for part in item.relative_to(packet).parts}
+    ]
+    errors.extend(f"forbidden evaluation material: {item}" for item in forbidden)
+    if (packet / "baseline/protocol").exists():
+        errors.append("baseline condition contains protocol directory")
+    if set(runs) == {"baseline", "protocol"}:
+        baseline = runs["baseline"]
+        protocol = runs["protocol"]
+        for field in ("suite_id", "suite_sha256", "model", "model_version", "decoding", "material_sha256"):
+            if baseline.get(field) != protocol.get(field):
+                errors.append(f"paired manifests differ in {field}")
+        if baseline.get("paired_run_id") != protocol.get("run_id") or protocol.get("paired_run_id") != baseline.get("run_id"):
+            errors.append("run manifests do not identify each other as a pair")
+    return {"packet": str(packet), "pass": not errors, "errors": sorted(set(errors))}

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 — 2026-09-12
+
+- Added `verify-experiment` to detect changed or missing inputs before a model run.
+- Detects gold/result leakage, unexpected files, protocol contamination of baseline, and mismatched paired manifests.
+- Added tampering and leakage regression tests and integrated packet verification into CI.
+
 ## 0.3.1 — 2026-09-12
 
 - Added isolated baseline/protocol experiment packets with SHA-256 manifests.

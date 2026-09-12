@@ -8,7 +8,7 @@ from typing import Sequence
 
 from .benchmark import compare_runs, score_context_funnel, score_suite
 from .core import load_json, render_markdown, template, validate
-from .experiment import prepare_experiment
+from .experiment import prepare_experiment, verify_experiment
 from .io import atomic_write_text
 
 
@@ -49,6 +49,8 @@ def parser() -> argparse.ArgumentParser:
     prepare.add_argument("--model", required=True)
     prepare.add_argument("--model-version", required=True)
     prepare.add_argument("--decoding", required=True)
+    verify = commands.add_parser("verify-experiment", help="verify experiment packet isolation and hashes")
+    verify.add_argument("packet")
     return root
 
 
@@ -73,6 +75,10 @@ def _main(argv: Sequence[str] | None = None) -> int:
         )
         print(json.dumps(prepared, ensure_ascii=False))
         return 0
+    if args.command == "verify-experiment":
+        report = verify_experiment(args.packet)
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        return 0 if report["pass"] else 1
     if args.command in {"benchmark", "benchmark-suite", "compare"}:
         if args.command == "benchmark":
             score = score_context_funnel(args.gold, args.result)

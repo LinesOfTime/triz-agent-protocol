@@ -7,7 +7,7 @@ from pathlib import Path
 
 from triz_protocol.benchmark import compare_runs, score_context_funnel, score_suite
 from triz_protocol.cli import main
-from triz_protocol.experiment import prepare_experiment
+from triz_protocol.experiment import prepare_experiment, verify_experiment
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,6 +107,40 @@ class BenchmarkTests(unittest.TestCase):
                     SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
                     pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
                 )
+
+    def test_verify_experiment_accepts_untouched_packet(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "packet"
+            prepare_experiment(
+                SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
+                pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
+            )
+            self.assertTrue(verify_experiment(output)["pass"])
+
+    def test_verify_experiment_detects_tampered_material(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "packet"
+            prepare_experiment(
+                SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
+                pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
+            )
+            task = output / "baseline/cases/artifact-lifecycle-v1/task.md"
+            task.write_text("tampered", encoding="utf-8")
+            report = verify_experiment(output)
+            self.assertFalse(report["pass"])
+            self.assertTrue(any("hash mismatch" in error for error in report["errors"]))
+
+    def test_verify_experiment_detects_gold_leak(self):
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "packet"
+            prepare_experiment(
+                SUITE / "suite.json", output, ROOT / "skills/triz-problem-solving",
+                pair_id="pair-001", model="test-model", model_version="test-v1", decoding="fixed",
+            )
+            (output / "baseline/gold.json").write_text("{}", encoding="utf-8")
+            report = verify_experiment(output)
+            self.assertFalse(report["pass"])
+            self.assertTrue(any("forbidden evaluation material" in error for error in report["errors"]))
 
     def test_cli_reports_malformed_json_without_traceback(self):
         with tempfile.TemporaryDirectory() as directory:

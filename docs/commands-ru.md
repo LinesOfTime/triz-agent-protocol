@@ -9,6 +9,7 @@
 | `validate FILE` | структурная проверка | не подтверждает истинность утверждений |
 | `render FILE --language ru -o FILE` | Markdown-представление | сначала требует валидный JSON |
 | `prepare-experiment SUITE DIR ...` | изолированные пакеты двух условий | не запускает модель и не копирует gold |
+| `verify-experiment DIR` | проверка пакета перед прогоном | возвращает `1` при подмене или загрязнении |
 | `benchmark GOLD RESULT` | оценка одного результата | gold должен быть зафиксирован заранее |
 | `benchmark-suite SUITE RESULTS` | сводная оценка | требует `run.json` |
 | `compare BASELINE PROTOCOL` | дельты парных прогонов | отклоняет несовпадающие настройки и входы |
